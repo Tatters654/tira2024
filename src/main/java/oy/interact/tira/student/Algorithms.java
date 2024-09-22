@@ -8,20 +8,32 @@ public class Algorithms {
       // nada
    }
 
-   ///////////////////////////////////////////
-   // Insertion Sort for the whole array
-   ///////////////////////////////////////////
-
-   public static <T extends Comparable<T>> void insertionSort(T[] array) {
-      // TODO: Implement this.
+   public static <T> void swap(T[] array, int first, int second) {
+      //bounds check
+      if (first >= 0 && second < array.length) {
+         //could be optimized but left this way for clarity
+         T tempfirst = array[first];
+         T tempsecond = array[second];
+         array[first] = tempsecond;
+         array[second] = tempfirst;
+      }
    }
 
-   ///////////////////////////////////////////
-   // Insertion Sort for a slice of the array
-   ///////////////////////////////////////////
+   public static <T extends Comparable<T>> void insertionSort(T[] array) {
+      insertionSort(array, 0, array.length);
+   }
 
    public static <T extends Comparable<T>> void insertionSort(T[] array, int fromIndex, int toIndex) {
-      // TODO: Implement this.
+      for (int i = fromIndex; i < toIndex; i++) {
+         T data = array[i];
+         int j = i;
+         //true when data is lesser than (j - 1)
+         while (j > fromIndex && data.compareTo(array[j - 1]) < 0) {
+            array[j] = array[j - 1];
+            j--;
+         }
+         array[j] = data;
+      }
    }
 
    //////////////////////////////////////////////////////////
@@ -40,20 +52,20 @@ public class Algorithms {
       // TODO: Implement this.
    }
 
-   ///////////////////////////////////////////
-   // Reversing an array
-   ///////////////////////////////////////////
-
    public static <T> void reverse(T[] array) {
-      // TODO: Implement this.
+      reverse(array, 0, array.length);
    }
 
-   ///////////////////////////////////////////
-   // Reversing a slice of an array
-   ///////////////////////////////////////////
-
    public static <T> void reverse(T[] array, int fromIndex, int toIndex) {
-      // TODO: Implement this.
+
+      int start_index = fromIndex - 1; //ei mitään hajua miks tässä pitää olla -1
+      int end_index = toIndex;
+
+      while (start_index < end_index) {
+         swap(array, start_index, end_index);
+         start_index += 1;
+         end_index -= 1;
+      }
    }
 
 
