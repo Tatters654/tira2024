@@ -1,5 +1,8 @@
 package oy.interact.tira.model;
 
+import oy.interact.tira.student.CoderFullNameComparator;
+import oy.interact.tira.student.CoderNameComparator;
+
 import java.util.Comparator;
 
 
@@ -58,7 +61,13 @@ public enum CoderSortOrder {
 	// current value of the enum. Use Comparator.reversed() to get a comparator
 	// that compares elements in reversed order.
 
-	public Comparator<Coder> getComparator() {
-		return null;
+	public Comparator<Coder> getComparator()
+	{
+        return switch (this) {
+            case FULLNAME_ASCENDING -> new CoderFullNameComparator();
+            case FULLNAME_DESCENDING -> new CoderFullNameComparator().reversed();
+            case CODER_NAME_ASCENDING -> new CoderNameComparator();
+            case CODER_NAME_DESCENDING -> new CoderNameComparator().reversed();
+        };
 	}
 }
