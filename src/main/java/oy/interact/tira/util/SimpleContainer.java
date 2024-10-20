@@ -1,5 +1,6 @@
 package oy.interact.tira.util;
 
+import java.lang.annotation.ElementType;
 import java.lang.reflect.Array;
 import java.util.Comparator;
 import java.util.function.Predicate;
@@ -56,7 +57,13 @@ public class SimpleContainer<E extends Comparable<E>> implements TIRAContainer<E
 
 	@Override
 	public E get(E element) throws IllegalArgumentException {
-		throw new NotYetImplementedException("Task 02-TASK on linear search not yet implemented");
+		for (E item : array) {
+			if (item == null) { break; }
+			if (element.equals(item)) {
+				return item;
+			}
+		}
+		return null;
 	}
 
 	@Override
@@ -66,7 +73,15 @@ public class SimpleContainer<E extends Comparable<E>> implements TIRAContainer<E
 
 	@Override
 	public int indexOf(E element, Comparator<E> usingComparator) {
-		throw new NotYetImplementedException("Task 02-TASK on linear search not yet implemented");
+		int index = 0;
+		for (E item : array) {
+			if (item == null) { break; }
+			if (item.compareTo(element) == 0) {
+				return index;
+			}
+			index += 1;
+		}
+		return -1;
 	}
 
 	@Override
@@ -110,12 +125,26 @@ public class SimpleContainer<E extends Comparable<E>> implements TIRAContainer<E
 
 	@Override
 	public int findIndex(Predicate<E> searcher) {
-		throw new NotYetImplementedException("Task 02-TASK on linear search not yet implemented");
+		int index = 0;
+		for (E item : array) {
+			if (item == null) { break; }
+			if (searcher.test(item)) {
+				return index;
+			}
+			index += 1;
+		}
+		return -1;
 	}
 
 	@Override
 	public E find(Predicate<E> searcher) {
-		throw new NotYetImplementedException("Task 02-TASK on linear search not yet implemented");
+		for (E item : array) {
+			if (item == null) { break; }
+			if (searcher.test(item)) {
+				return item;
+			}
+		}
+		return null;
 	}
 
 	@Override
