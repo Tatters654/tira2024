@@ -116,6 +116,18 @@ Reverse on O(n), sillä algoritmi iteroi taulukon läpi kerran.
 Insertion sort on 0(n^2).
 
 ## 03-TASK
+Listan lopusta haku pelkällä sukunimellä, ja sitten koko nimellä "exact" checkbox päällä
+
+20ms ja 11ms
+22ms ja 11ms
+
+Listan puolivälissä H alkavalla sukunimellä ajat olivat 5ms ja 1ms.
+Listan alussa ei ollut oikein väliä kumpaa tapaa käytti, molemmat olivat 0-1 ms tasoa.
+
+Haku toimii nopeammin tämän tehtävän jälkeen, koska se käyttää BinarySearchia eikä "tyhmää" iterointi & vertaa tyypin hakualgoritmia. Haku toimii paljon nopeammin, koska jokaista taulukon jäsentä ei tarvi verrata etsimäämme hakusanaan.
+BinarySearch toimii nopeammin kuin edellinen algoritmi, koska järjestellystä listasta se voi jättää vertailun ulkopuolelle ne jäsenet, jotka tiedetään varmaksi ettei etsimämme taulukon jäsen voi olla siellä. Jatkuvasti taulukon hakualuetta pienentämällä päästään ihan hyvään performanssiin.
+BinarySearchin ja edellisen for-loopin performanssin erotus ei ole suuri, jos etsimämme data on taulukon alkupäässä. Erotus kasvaa, kun etsimämme data on taulukon loppupäässä.
+
 
 ## 04-TASK
 

@@ -73,15 +73,18 @@ public class SimpleContainer<E extends Comparable<E>> implements TIRAContainer<E
 
 	@Override
 	public int indexOf(E element, Comparator<E> usingComparator) {
-		int index = 0;
-		for (E item : array) {
-			if (item == null) { break; }
-			if (item.compareTo(element) == 0) {
-				return index;
+		if (sorted) {
+			return Algorithms.binarySearchRecursive(element, array, 0, array.length, usingComparator);
+		} else {
+			int index = 0;
+			for (E item : array) {
+				if (item.compareTo(element) == 0) {
+					return index;
+				}
+				index += 1;
 			}
-			index += 1;
+			return -1;
 		}
-		return -1;
 	}
 
 	@Override
@@ -217,8 +220,8 @@ public class SimpleContainer<E extends Comparable<E>> implements TIRAContainer<E
 		// Also note that the array here has elements only between 0..<count!
 		if (array.length != 0) {
 			Algorithms.insertionSort(array, 0, count);
+			sorted = true;
 		}
-		sorted = true;
 	}
 
 	@Override
@@ -226,7 +229,9 @@ public class SimpleContainer<E extends Comparable<E>> implements TIRAContainer<E
 		// TODO: call your sorting algorithm with array, update sorted status of this container!
 		// You may want to check if the array has any elements before calling sort.
 		// Also note that the array here has elements only between 0..<count!
-		Algorithms.insertionSort(array, usingComparator);
+		if (array.length != 0) {
+			Algorithms.insertionSort(array, usingComparator);
+			sorted = true;
+		}
 	}
-
 }
