@@ -53,7 +53,7 @@ public class Algorithms {
          T data = array[i];
          int j = i;
          //true when data is lesser than (j - 1)
-         while (j > fromIndex && (comparator.compare(data, array[j - 1])) < 0) {
+         while (j > fromIndex && data != null && (comparator.compare(data, array[j - 1])) < 0) {
             array[j] = array[j - 1];
             j--;
          }
@@ -100,6 +100,19 @@ public class Algorithms {
    }
 
    public static <T extends Comparable<T>> int binarySearchRecursive(T aValue, T[] fromArray, int fromIndex, int toIndex) {
+      if (toIndex >= fromIndex) {
+         int mid = fromIndex + (toIndex - fromIndex) / 2;
+
+         if (aValue.compareTo(fromArray[mid]) == 0) {
+            return mid;
+         }
+
+         if (aValue.compareTo(fromArray[mid]) > 0)  {
+            return binarySearchRecursive(aValue, fromArray, mid + 1, toIndex);
+         }
+
+         return binarySearchRecursive(aValue, fromArray, fromIndex, mid - 1);
+      }
       return -1;
    }
 
@@ -108,7 +121,7 @@ public class Algorithms {
    ///////////////////////////////////////////
 
    public static <T> int binarySearch(T aValue, T[] fromArray, int fromIndex, int toIndex, Comparator<T> comparator) {
-      return -1;
+      return binarySearchRecursive(aValue, fromArray, fromIndex, toIndex - 1, comparator);
    }
 
    public static <T> int binarySearch(T aValue, T[] fromArray, int fromIndex, int toIndex, Comparator<T> comparator, BSearchImplementation impl) {
@@ -119,9 +132,18 @@ public class Algorithms {
       return -1;
    }
 
-   public static <T> int binarySearchRecursive(T aValue, T[] fromArray, int fromIndex,
-         int toIndex, Comparator<T> comparator) {
-      // TODO: Recursive implementation
+   public static <T> int binarySearchRecursive(T aValue, T[] fromArray, int fromIndex, int toIndex, Comparator<T> comparator) {
+      if (toIndex >= fromIndex) {
+         int mid = fromIndex + (toIndex - fromIndex) / 2;
+
+         if (comparator.compare(aValue, fromArray[mid]) == 0) {
+            return mid;
+         }
+         else if (comparator.compare(aValue, fromArray[mid]) > 0)  {
+            return binarySearchRecursive(aValue, fromArray, mid + 1, toIndex, comparator);
+         }
+         return binarySearchRecursive(aValue, fromArray, fromIndex, mid - 1, comparator);
+      }
       return -1;
    }
 
