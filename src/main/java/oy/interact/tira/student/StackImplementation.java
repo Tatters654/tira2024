@@ -9,7 +9,7 @@ public class StackImplementation<E> implements StackInterface<E> {
     // 0 means that there is 1 item
     // 9 means that there are 10 items
     // last index points to the index where the last stored element is
-    private int lastIndex = -1;
+    private int count = -1;
     private static final int DEFAULT_STACK_SIZE = 32;
 
     public StackImplementation() {
@@ -33,20 +33,20 @@ public class StackImplementation<E> implements StackInterface<E> {
             System.out.println("Null pushed");
             throw new NullPointerException("Null was trying to be pushed");
         }
-        if (lastIndex > capacity()) {
+        if (count + 1 == capacity()) {
             reallocate();
         }
-        lastIndex += 1;
-        itemArray[lastIndex] = element;
+        count += 1;
+        itemArray[count] = element;
     }
 
     @Override
     public E pop() throws IllegalStateException {
-        System.out.println();
-        if (lastIndex >= 0) {
-            Object temp = itemArray[lastIndex];
-            itemArray[lastIndex] = null;
-            lastIndex -= 1;
+        System.out.println("popping element:" + count);
+        if (count >= 0) {
+            Object temp = itemArray[count];
+            itemArray[count] = null;
+            count -= 1;
             return (E) temp;
         }
         throw new IllegalStateException("Tyhjä array");
@@ -54,38 +54,36 @@ public class StackImplementation<E> implements StackInterface<E> {
 
     @Override
     public E peek() throws IllegalStateException {
-        if (lastIndex >= 0) {
-            return (E) itemArray[lastIndex];
+        if (count >= 0) {
+            return (E) itemArray[count];
         }
         throw new IllegalStateException("Tyhjä array");
     }
 
     @Override
     public int size() {
-        return lastIndex + 1;
+        return count + 1;
     }
 
     @Override
     public boolean isEmpty() {
-        return lastIndex == -1;
+        return count == -1;
     }
 
     @Override
     public void clear() {
-        Object [] tempArray= new Object[capacity()];
+        Object [] tempArray = new Object[capacity()];
         itemArray = tempArray;
-
+        count = -1;
     }
+
     private void reallocate() {
+        System.out.println("allocating new memory");
         Object [] tempArray = new Object[capacity() * 2];
-        for (int i = 0; i <= itemArray.length; i++) {
+        for (int i = 0; i <= count; i++) {
             tempArray[i] = itemArray[i];
-            if (itemArray[i] != null) {
-                break;
-            }
         }
         itemArray = tempArray;
-
     }
 
     @Override
@@ -95,7 +93,7 @@ public class StackImplementation<E> implements StackInterface<E> {
         for (int i = 0; i < itemArray.length; i++) {
             if (itemArray[i] != null) {
                 sb.append(itemArray[i]);
-                if (i < lastIndex) {
+                if (i < count) {
                     sb.append(", ");
                 }
                 }
@@ -106,10 +104,11 @@ public class StackImplementation<E> implements StackInterface<E> {
 
     private void debug() {
         StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        System.out.println("\n");
         System.out.println("Currently in method: " + stackTrace[2].getMethodName());
         System.out.println("Current Internal state:");
         System.out.println(toString());
-        System.out.println("last index: " + lastIndex);
+        System.out.println("count: " + count);
         System.out.println("capacity: " + capacity());
         System.out.println("size: " + size());
         System.out.println("\n");
