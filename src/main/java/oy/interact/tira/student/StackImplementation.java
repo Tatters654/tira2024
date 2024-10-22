@@ -21,14 +21,16 @@ public class StackImplementation<E> implements StackInterface<E> {
 
     @Override
     public int capacity() {
-        System.out.println(itemArray.length);
         return itemArray.length;
     }
 
     @Override
     public void push(E element) throws OutOfMemoryError, NullPointerException {
+        debug();
+        System.out.println("Pushing: " + element);
         //jos yritetty push on OoB, niin reallocate
         if (element == null) {
+            System.out.println("Null pushed");
             throw new NullPointerException("Null was trying to be pushed");
         }
         if (lastIndex > capacity()) {
@@ -40,6 +42,7 @@ public class StackImplementation<E> implements StackInterface<E> {
 
     @Override
     public E pop() throws IllegalStateException {
+        System.out.println();
         if (lastIndex >= 0) {
             Object temp = itemArray[lastIndex];
             itemArray[lastIndex] = null;
@@ -100,4 +103,15 @@ public class StackImplementation<E> implements StackInterface<E> {
         sb.append("]");
         return sb.toString();
         }
+
+    private void debug() {
+        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        System.out.println("Currently in method: " + stackTrace[2].getMethodName());
+        System.out.println("Current Internal state:");
+        System.out.println(toString());
+        System.out.println("last index: " + lastIndex);
+        System.out.println("capacity: " + capacity());
+        System.out.println("size: " + size());
+        System.out.println("\n");
+    }
     }
