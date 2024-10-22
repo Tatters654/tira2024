@@ -35,7 +35,58 @@ public class ParenthesisChecker {
     * @return Returns the number of parentheses found from the input in total (both opening and closing).
     * @throws ParenthesesException if the parentheses did not match as intended.
     */
-    public static int checkParentheses(StackInterface<Character> stack, String fromString) throws ParenthesesException {
+   public static int checkParentheses(StackInterface<Character> stack, String fromString) throws ParenthesesException {
+       int lineNumber = 1;
+       int columnNumber = 1;
+       int result = 0; //?????????????
+       char popResult;
+
+       for (int i = 0; i < fromString.length(); i++) {
+           if (fromString.charAt(i) == '\n') {
+               lineNumber += 1;
+               columnNumber = 0;
+           }
+
+
+
+           if (fromString.charAt(i) == '(' || fromString.charAt(i) == '{' || fromString.charAt(i) == '[') {
+               stack.push(fromString.charAt(i));
+           }
+
+
+
+           if (fromString.charAt(i) == ')' || fromString.charAt(i) == '}' || fromString.charAt(i) == ']') {
+               // if this throws, then there are too many closing parentheses
+               try { popResult = stack.pop(); }
+               catch (Exception e) {
+                   throw new ParenthesesException("Array is empty", lineNumber, columnNumber, ParenthesesException.TOO_MANY_CLOSING_PARENTHESES);
+               }
+
+               if (fromString.charAt(i) == ')') {
+                   if (popResult != '(') {
+                       throw new ParenthesesException("Mismatched closing parenthesis", lineNumber, columnNumber, ParenthesesException.PARENTHESES_IN_WRONG_ORDER);
+                   }
+               }
+               if (fromString.charAt(i) == ']') {
+                   if (popResult != '[') {
+                       throw new ParenthesesException("Mismatched closing bracket", lineNumber, columnNumber, ParenthesesException.PARENTHESES_IN_WRONG_ORDER);
+                   }
+               }
+               if (fromString.charAt(i) == '}') {
+                   if (popResult != '{') {
+                       throw new ParenthesesException("Mismatched closing brace", lineNumber, columnNumber, ParenthesesException.PARENTHESES_IN_WRONG_ORDER);
+                   }
+               }
+               result += 2;
+           }
+           columnNumber += 1;
+       }
+       if (!stack.isEmpty()) {
+           throw new ParenthesesException("Unmatched opening parentheses", lineNumber, columnNumber, ParenthesesException.TOO_MANY_OPENING_PARENTHESES);
+       }
+
+
+
       // TODO (for grade 1, see instructions for higher grades):
       // for each character in the input string
       //   if character is an opening parenthesis -- one of "([{"
@@ -48,6 +99,6 @@ public class ParenthesisChecker {
       //         throw an exception, wrong kind of parenthesis were in the text (e.g. "asfa ( asdf } sadf")
       // if the stack is not empty after all the characters have been handled
       //   throw an exception since the string has more opening than closing parentheses.
-      return -1;
+      return result;
    }
 }

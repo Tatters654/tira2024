@@ -38,12 +38,13 @@ public class StackImplementation<E> implements StackInterface<E> {
         }
         count += 1;
         itemArray[count] = element;
+        System.out.println(toString());
     }
 
     @Override
     public E pop() throws IllegalStateException {
-        System.out.println("popping element:" + count);
         if (count >= 0) {
+            System.out.println("popping element:" + count);
             Object temp = itemArray[count];
             itemArray[count] = null;
             count -= 1;
