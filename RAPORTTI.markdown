@@ -131,6 +131,13 @@ BinarySearchin ja edellisen for-loopin performanssin erotus ei ole suuri, jos et
 
 ## 04-TASK
 
+Opin miten tehdään pinorakenne. En kokenut tehtävää erittäin vaikeaksi, pinorakenne on aika yksinkertainen. Implementaatiossa hieman vaikeuksia henkilökohtaisen taito-ongelman takia, ja siitä miten vaatimusmäärittely on epäselviä. Mielestäni parenthesischecker() palautusarvoa ei oltu speksattu missään ohjeessa, vaan löysin ongelman UT:n perusteella, mikä ei välttämättä nyt ole se paras tapa speksata.
+
+Pino implementaationi täyttää aikakompleksisuus-vaatimukset.
+
+Kaikki funktiot ovat riippumattomia pinon koosta, paitsi reallocate() ja toString(), joka riippuu lineearisesti pinon koosta eli on O(n).
+Algoritmit ovat O(1), sillä niissä ei iteroida pinon läpi ollenkaan, vaan muistissa pidetään viimeisen indeksin arvoa. Tämän arvon kautta pinon käyttäminen on O(1) aikakompleksisuudeltaan.
+
 ## 05-TASK
 
 ## 06-TASK
